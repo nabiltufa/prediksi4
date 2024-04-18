@@ -2,7 +2,7 @@ import pickle
 import streamlit as st
 import datetime
 
-model = pickle.load(open('kernel_mantap_linear.pkl', 'rb'))
+model = pickle.load(open('kernel_mantap4_rbf.pkl', 'rb'))
 
 st.title('Prediksi Total Produksi Rumput Laut Eucheuma Cottonii di Desa Lontar')
 
