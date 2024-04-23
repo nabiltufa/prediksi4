@@ -1,6 +1,7 @@
 import pickle
 import streamlit as st
 import datetime
+import numpy as np
 
 model = pickle.load(open('kernel_mantap4_rbf.pkl', 'rb'))
 
@@ -15,9 +16,10 @@ modal = st.text_input('Input Modal')
 predict = ''
 
 if st.button ('Prediksi'):
-    # Mengonversi input tanggal menjadi tipe data datetime
-    masa_panen = datetime.datetime.combine(masa_panen, datetime.datetime.min.time())
-
+    # Konversi input waktu panen menjadi nilai numerik (misalnya jumlah hari sejak tanggal tertentu)
+    tanggal_referensi = datetime.datetime(1970, 1, 1)  # atau gunakan tanggal referensi lain jika diperlukan
+    masa_panen = (masa_panen - tanggal_referensi).days
+    
     predict = model.predict(
         [[masa_panen,arus,Salinitas,suhu,modal]]
     )
