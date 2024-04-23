@@ -15,6 +15,9 @@ modal = st.text_input('Input Modal')
 predict = ''
 
 if st.button ('Prediksi'):
+    # Mengonversi input tanggal menjadi tipe data datetime
+    masa_panen = datetime.datetime.combine(masa_panen, datetime.datetime.min.time())
+
     predict = model.predict(
         [[masa_panen,arus,Salinitas,suhu,modal]]
     )
