@@ -15,13 +15,17 @@ modal = st.text_input('Input Modal')
 
 predict = ''
 
-if st.button ('Prediksi'):
+if st.button('Prediksi'):
     # Konversi input waktu panen menjadi nilai numerik (misalnya jumlah hari sejak tanggal tertentu)
-    tanggal_referensi = datetime.datetime(1970, 1, 1)  # atau gunakan tanggal referensi lain jika diperlukan
-    masa_panen = (masa_panen - tanggal_referensi).days
-    
-    predict = model.predict(
-        [[masa_panen,arus,Salinitas,suhu,modal]]
-    )
-    st.write('Prediksi Total Produksi Rumput Laut Eucheuma Cottonii : ', predict)
-    st.write ('Nilai Kesalahan : 3,18%')
+    tanggal_referensi = datetime.date(1970, 1, 1)  # atau gunakan tanggal referensi lain jika diperlukan
+    masa_panen_numerik = (masa_panen - tanggal_referensi).days if masa_panen else None
+
+    if masa_panen_numerik is not None:
+        # Menggunakan nilai datetime sebagai input untuk memprediksi total produksi
+        predict = model.predict(
+            [[masa_panen_numerik, arus, Salinitas, suhu, modal]]
+        )
+        st.write('Prediksi Total Produksi Rumput Laut Eucheuma Cottonii : ', predict)
+        st.write('Nilai Kesalahan : 3,18%')
+    else:
+        st.write("Masukkan tanggal panen yang valid.")
